@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Egulias\EmailValidator\Parser\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +23,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
+        'picture',
+        'bio',
+        'skills',
+        'projects',
+        'certification'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,5 +50,17 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function posts(){
+        return $this->belongsToMany(Post::class);
+    }
+
+    public function connexions(){
+        return $this->hasMany(Connexion::class);
+    }
+
+    public function Comments(){
+        return $this->hasMany(Comment::class);
     }
 }

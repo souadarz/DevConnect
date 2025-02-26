@@ -17,6 +17,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('Bio');
+            $table->string('picture')->nullable();
+            $table->json('skills')->nullable();
+            $table->json('projects')->nullable();
+            $table->json('certifications')->nullable();
+            $table->foreignId('post_id')->constrained()->onDelete('cascade');
+            $table->foreignId('like_id')->constrained();
+            $table->foreignId('comment_id')->constrained()->onDelete('cascade');
+            $table->foreignId('notification_id')->constrained()->onDelete('cascade');
+            $table->foreignId('connexion_id')->constrained()->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
