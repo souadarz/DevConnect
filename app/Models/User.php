@@ -24,10 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'picture',
-        'bio',
-        'skills',
-        'projects',
-        'certification'];
+        'bio'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -53,7 +50,7 @@ class User extends Authenticatable
     }
 
     public function posts(){
-        return $this->belongsToMany(Post::class);
+        return $this->hasMany(Post::class);
     }
 
     public function connexions(){

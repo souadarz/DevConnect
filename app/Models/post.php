@@ -9,10 +9,10 @@ class post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
-    protected $fillable = ['content'];
+    protected $fillable = ['content','user_id'];
     
     public function user(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function comments(){
