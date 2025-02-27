@@ -7,6 +7,7 @@ use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class PostController extends Controller
 {
@@ -35,12 +36,10 @@ class PostController extends Controller
             'content' => ['required'],
         ]);
 
-        
         $post = Post::create([
             'content' => $request->content,
             'user_id'=>Auth::id(),
         ]);
-        dd($post);
 
         return redirect(route('index'));
     }
@@ -48,9 +47,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(post $post)
+    public function show()
     {
-        //
+        $posts = post::where('user_id', Auth::id())->get();
+        return view('/mesPost', compact(['posts']));
     }
 
     /**
@@ -58,15 +58,24 @@ class PostController extends Controller
      */
     public function edit(post $post)
     {
-        //
+        return view('editPost', compact(['post']));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatepostRequest $request, post $post)
+    public function update(Request $request, post $post)
     {
-        //
+        $request->validate([
+            'content' => ['required'],
+        ]);
+
+            $post->update([
+            'user_id'=>Auth::id(),
+            'content' => $request->content,
+        ]);
+
+        return redirect(route('post.show'));
     }
 
     /**
@@ -74,6 +83,7 @@ class PostController extends Controller
      */
     public function destroy(post $post)
     {
-        //
+        $post->delete();
+        return redirect(route('post.show'));
     }
 }

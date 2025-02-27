@@ -84,9 +84,10 @@
                                 <label for="">Content</label>
                                 <input type="text" name="content" class="w-full rounded-lg">
                             </div>
+                            <div class="flex justify-end">
                                 <button type="submit"
                                     class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700 ">Post</button>
- 
+                            </div>
                             <div class="flex justify-between mt-4 pt-4 border-t">
                                 <button
                                     class="flex items-center space-x-2 text-gray-500 hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200">
