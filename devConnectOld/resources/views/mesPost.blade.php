@@ -1,7 +1,8 @@
 
 <x-app-layout>
     <x-navBar/>
-    <h1 class="text-2xl font-bold mb-4">My Posts</h1>
+    <h1>test</h1>
+    <h1 class="text-2xl font-bold ml-8 mt-8">My Posts</h1>
 
     <div class="flex flex-col space-y-4">
         @foreach ($posts as $post)
@@ -23,3 +24,24 @@
         @endforeach
     </div>
 </x-app-layout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
