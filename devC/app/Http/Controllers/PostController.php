@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatepostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -15,7 +16,7 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        return view('index');
+       //
     }
 
     /**

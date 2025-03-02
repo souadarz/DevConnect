@@ -76,7 +76,7 @@
                         @csrf
                         <div class="bg-white rounded-xl shadow-sm p-4">
                             <div class="flex-col items-center space-x-4">
-        
+
                                 <!-- <button
                                  class="bg-gray-100 hover:bg-gray-200 text-gray-500 text-left rounded-lg px-4 py-3 flex-grow transition-colors duration-200">
                                  Share your knowledge or ask a question...
@@ -124,8 +124,9 @@
                         </div>
                     </form>
 
+
                     <!-- Posts -->
-                     @foreach($posts as $post)
+                    @foreach($posts->sortByDesc('created_at') as $post)
                     <div class="bg-white rounded-xl shadow-sm">
                         <div class="p-4">
                             <div class="flex items-center justify-between">
@@ -135,78 +136,68 @@
                                     <div>
                                         <h3 class="font-semibold">{{ $post->user->name }}</h3>
                                         <p class="text-gray-500 text-sm">Senior Backend Developer at Tech Corp</p>
-                                        <p class="text-gray-400 text-xs">{{$post->created_at->diffForHumans()}} ago</p>
+                                        <p class="text-gray-400 text-xs">{{$post->created_at->diffForHumans()}}</p>
                                     </div>
                                 </div>
-                                <button class="text-gray-400 hover:text-gray-600">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                                    </svg>
-                                </button>
                             </div>
 
-                            <div class="mt-4">
+                            <div class="mt-4 mb-2">
                                 <p class="text-gray-700">{{ $post->content }}</p>
 
-                                <div class="mt-4 bg-gray-900 rounded-lg p-4 font-mono text-sm text-gray-200">
-                                    <!-- <pre><code>
-            const redis = require('redis');
-            const client = redis.createClient();
-            
-            async function getCachedData(key) {
-              const cached = await client.get(key);
-              if (cached) {
-                return JSON.parse(cached);
-              }
-              
-              const data = await fetchDataFromDB();
-              await client.setEx(key, 3600, JSON.stringify(data));
-              return data;
-            }
-                                </code></pre> -->
-                                </div>
-
                                 <div class="mt-4 flex flex-wrap gap-2">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">#nodejs</span>
+                                    <!-- <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">#nodejs</span>
                                     <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">#redis</span>
-                                    <span
-                                        class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">#performance</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">#performance</span> -->
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">#performance</span>
                                 </div>
+                            </div>
 
-                                <div class="mt-4 flex items-center justify-between border-t pt-4">
-                                    <div class="flex items-center space-x-4">
-                                        <button class="flex items-center space-x-2 text-gray-500 hover:text-blue-500">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                                            </svg>
-                                            <span>42</span>
-                                        </button>
-                                        <button class="flex items-center space-x-2 text-gray-500 hover:text-blue-500">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                                            </svg>
-                                            <span>12</span>
-                                        </button>
+                            <!-- Comments Section -->
+                            <div class="border-t border-gray-200 p-6">
+                                <h3 class="text-xl font-bold mb-6">Comments</h3>
+                                <div class="space-y-6">
+                                    <!-- Comment Input -->
+                                    <form action="{{ route('comment.store', $post->id) }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                        <div class="flex items-start space-x-4">
+                                            <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+                                            <div class="flex-1">
+                                                <textarea name="content" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                    placeholder="Add to the discussion..."></textarea>
+                                                <div class="flex justify-end">
+                                                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Comment</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!-- Existing Comments -->
+                                    @foreach($post->comments->sortByDesc('created_at') as $comment)
+                                    <div class="flex items-start space-x-4 mt-4">
+                                        <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+                                        <div class="flex-1">
+                                            <div class="bg-gray-50 p-4 rounded-lg">
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <h4 class="font-semibold">{{ $comment->user->name }}</h4>
+                                                    <span class="text-gray-500 text-sm">{{ $comment->created_at->diffForHumans() }}</span>
+                                                </div>
+                                                <p class="text-gray-800">{{ $comment->content }}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <button class="text-gray-500 hover:text-blue-500">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-                                        </svg>
-                                    </button>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
                     @endforeach
+
                     <!-- Right Sidebar -->
                     <div class="space-y-6">
                         <!-- Job Recommendations -->
                         <div class="bg-white rounded-xl shadow-sm p-4">
-                            <h3 class="font-semibold mb-4">Job Recommendations</h3> 
+                            <h3 class="font-semibold mb-4">Job Recommendations</h3>
                             <div class="space-y-4">
                                 <div class="p-3 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                                     <div class="flex items-start space-x-3">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -26,5 +27,8 @@ Route::get('/mesPost', [PostController::class, 'show'])->name('post.show');
 Route::get('/editPost{post}', [PostController::class, 'edit'])->name('post.edit');
 Route::post('/updatePost{post}', [PostController::class, 'update'])->name('post.update');
 Route::delete('/deletePost{post}', [PostController::class, 'destroy'])->name('post.delete');
+
+// comment route
+Route::post('/storeComment/{post}', [CommentController::class, 'store'])->name('comment.store');
 
 require __DIR__.'/auth.php';

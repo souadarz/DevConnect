@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Skills extends Model
+class tag_post extends Model
 {
-    protected $fillable = ['name'];
+    //
 }
