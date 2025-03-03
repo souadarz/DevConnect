@@ -10,14 +10,18 @@ class tagController extends Controller
 {
     public function store(Request $request, Post $post){
         
-        $tag = $request->validate([
-            'content' => 'required|min:3|string'
+        $request->validate([
+            'name' => 'required|min:3|string'
         ]);
         
-        $tag = new Tag($tag);
-        // $tag->user_id = auth()->id();
-        $tag->post_id = $post->id;
-        $tag->save();
+        $name_tags = trim($_POST['tag_name_input']);
+        $tags = array_map('trim', explode(',', $name_tags));
+        $tag = Tag::firstOrCreate(['name' => $request->name]);
+        $post->tags()->attach($tag->id);
+
+        // $tag = new Tag($tag);
+        // $tag->post_id = $post->id;
+        // $tag->save();
         return redirect()->back();
 }
 }

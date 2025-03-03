@@ -32,16 +32,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
-            'content' => ['required'],
-            'code' => ['nullable', 'string'],
-            'image' => ['nullable', 'image'],
-            'link' => ['nullable', 'url'],
-            'profile_image' => ['nullable', 'image'],
+            'content' => ['required','max:255','string'],
+            'code' => ['nullable','string'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'link' => ['nullable','url'],
+            'profile_image' => ['nullable'],
         ]);
-
-        $imagepath = $request->file('image') ? $request->file('image')->store('posts', 'public') : null;
-
+        $imagepath = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
+        
         $post = Post::create([
             'content' => $request->content,
             'code' => $request->code,
@@ -76,12 +76,20 @@ class PostController extends Controller
     public function update(Request $request, post $post)
     {
         $request->validate([
-            'content' => ['required'],
+            'content' => ['required','max:255','string'],
+            'code' => ['nullable','string'],
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'link' => ['nullable','url'],
+            'profile_image' => ['nullable'],
         ]);
+        $imagepath = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
 
         $post->update([
             'user_id' => Auth::id(),
             'content' => $request->content,
+            'code' => $request->code,
+            'likn' => $request->link,
+            'image' => $imagepath,
         ]);
 
         return redirect(route('post.show'));

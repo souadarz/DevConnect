@@ -9,7 +9,7 @@ class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
-    protected $fillable = ['content','user_id'];
+    protected $fillable = ['content','user_id','code','image','link'];
     
     public function user(){
         return $this->belongsTo(User::class);
@@ -19,7 +19,7 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function tag(){
+    public function tags(){
         return $this->belongsToMany(Tag::class);
     }
 }

@@ -72,7 +72,7 @@
                 <!-- Main Feed -->
                 <div class="lg:col-span-2 space-y-6">
                     <!-- Post Creation -->
-                    <form action="{{route('post.store')}}" method="POST">
+                    <form action="{{route('post.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="bg-white rounded-xl shadow-sm p-4">
                             <div class="flex-col items-center space-x-4">
@@ -86,44 +86,26 @@
                             </div>
 
                             <div class="flex-col justify-between mt-4 pt-4 border-t">
-                                <!-- <button
-                                    class="flex items-center space-x-2 text-gray-500 hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200">
-                                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                                    </svg>
-                                    <span>Code</span>
-                                </button> -->
+
                                 <label for="">Code</label>
-                                <input type="text" name="code" class="w-full rounded-lg">
-                                <!-- <button
-                                    class="flex items-center space-x-2 text-gray-500 hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200">
-                                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                        </svg>
-                                        <span>Image</span>
-                                </button> -->
+                                <textarea name="code" id="code" class="w-full rounded-lg"></textarea>
+
                                 <label for="">image</label>
                                 <input type="file" name="image" class="w-full px-3 py-2 border border-gray-500 rounded-lg">
-                                <!-- <button
-                                    class="flex items-center space-x-2 text-gray-500 hover:bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200">
-                                    <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                                    </svg>
-                                    <span>Link</span>
-                                </button> -->
+
                                 <label for="">Link</label>
                                 <input type="url" name="link" class="w-full rounded-lg">
+
+                                <label for="">Tags</label>
+                                <input type="text" name="tags" class="w-full rounded-lg">
+
                                 <div class="flex justify-end mt-3">
                                     <button type="submit"
-                                        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700 ">Post</button>
+                                        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700">Post</button>
                                 </div>
                             </div>
                         </div>
                     </form>
-
 
                     <!-- Posts -->
                     @foreach($posts->sortByDesc('created_at') as $post)
@@ -143,13 +125,19 @@
 
                             <div class="mt-4 mb-2">
                                 <p class="text-gray-700">{{ $post->content }}</p>
-
+                                <div class="w-48 h-48 flex-shrink-0">
+                                    <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">
+                                </div>
+                                <div class="mt-4 bg-gray-900 rounded-lg p-4 font-mono text-sm text-gray-200 ">
+                                    <pre><code>{{ $post->code }}</code></pre>
+                                </div>
                                 <div class="mt-4 flex flex-wrap gap-2">
                                     <!-- <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">#nodejs</span>
                                     <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">#redis</span>
                                     <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">#performance</span> -->
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">#performance</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs"></span>
                                 </div>
+
                             </div>
 
                             <!-- Comments Section -->
@@ -166,7 +154,7 @@
                                                 <textarea name="content" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                     placeholder="Add to the discussion..."></textarea>
                                                 <div class="flex justify-end">
-                                                <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Comment</button>
+                                                    <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Comment</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -261,4 +249,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        new MultiSelectTag('tags') // id
+                    </script>
 </x-app-layout>
