@@ -125,18 +125,23 @@
 
                             <div class="mt-4 mb-2">
                                 <p class="text-gray-700">{{ $post->content }}</p>
+                                @if(!empty($post->image))
                                 <div class="w-48 h-48 flex-shrink-0">
                                     <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">
                                 </div>
+                                @endif
+                                @if(!empty($post->code))
                                 <div class="mt-4 bg-gray-900 rounded-lg p-4 font-mono text-sm text-gray-200 ">
                                     <pre><code>{{ $post->code }}</code></pre>
                                 </div>
-                                <div class="mt-4 flex flex-wrap gap-2">
-                                    <!-- <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">#nodejs</span>
-                                    <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">#redis</span>
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">#performance</span> -->
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs"></span>
-                                </div>
+                                @endif
+                                @if($post->tags)
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        @foreach($post->tags as $tag)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $tag->name }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
 
                             </div>
 
@@ -249,8 +254,4 @@
                             </div>
                         </div>
                     </div>
-
-                    <script>
-                        new MultiSelectTag('tags') // id
-                    </script>
 </x-app-layout>

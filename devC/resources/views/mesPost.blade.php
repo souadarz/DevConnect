@@ -24,10 +24,19 @@
                 <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">
             </div>
             @endif
+            @if(!empty($post->code))
             <div class="mt-4 bg-gray-900 rounded-lg p-4 font-mono text-sm text-gray-200 ">
                 <pre><code>{{ $post->code }}</code></pre>
             </div>
+            @endif
             <span class="text-gray-500 text-sm">Publié le {{ $post->created_at->format('d/m/Y') }}</span>
+            @if($post->tags)
+            <div class="mt-4 flex flex-wrap gap-2">
+                @foreach($post->tags as $tag)
+                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $tag->name }}</span>
+                @endforeach
+            </div>
+            @endif
         </div>
         @endforeach
     </div>

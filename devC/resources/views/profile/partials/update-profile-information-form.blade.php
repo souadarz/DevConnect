@@ -46,6 +46,10 @@
                 </div>
             @endif
         </div>
+        <div>
+            <x-input-label for="email" :value="__('Skills')" />
+            <textarea name="skills" id="skills" class="w-full rounded-lg"></textarea>
+        </div>
 
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>

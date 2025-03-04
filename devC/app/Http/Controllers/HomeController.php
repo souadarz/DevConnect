@@ -13,9 +13,9 @@ class HomeController extends Controller
 {
     public function index() { 
         $user = User::where('id',Auth::id())->first();
-        $posts = post::all();
-        $comments = Comment::all();
-        $tags = Tag::all();
-        return view('index', compact('posts','user','comments','tags'));
+        $posts = post::with('tags', 'comments')->get();
+        // $comments = Comment::all();
+        // dd($posts);
+        return view('index', compact('posts','user'));
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request as FacadesRequest;
@@ -38,7 +39,7 @@ class PostController extends Controller
             'code' => ['nullable','string'],
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'link' => ['nullable','url'],
-            'profile_image' => ['nullable'],
+            'profile_image' => ['nullable']
         ]);
         $imagepath = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
         
@@ -47,8 +48,22 @@ class PostController extends Controller
             'code' => $request->code,
             'image' => $imagepath,
             'link' => $request->link,
-            'user_id' => Auth::id(),
-        ]);
+            'user_id' => Auth::id() ]);
+
+            if ($request->filled('tags')) {
+                $tags = explode(' ', $request->tags);
+                foreach ($tags as $tagg) {
+                    $tag = trim(strtolower($tagg));
+                    if (!empty($tag)) {
+                        if (!str_starts_with($tag, '#')) {
+                            $tag = '#' . $tag;
+                        }
+                        $tag =Tag::firstOrCreate(['name' => $tag]);
+                        // dd($tag);
+                        $post->tags()->attach($tag->id);
+                    }
+                }
+            }
 
         return redirect(route('index'));
     }
