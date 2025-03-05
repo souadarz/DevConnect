@@ -12,8 +12,8 @@
                         <div class="relative">
                             <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-400"></div>
                                 @if(!empty($user->picture))
-                                <div class="w-48 h-48 flex-shrink-0">
-                                    <img src="{{Storage::url($post->image)}}" alt="Profile"
+                                <div class="flex-shrink-0">
+                                    <img src="{{Storage::url($user->picture)}}" alt="Profile"
                                     class="absolute -bottom-6 left-4 w-20 h-20 rounded-full border-4 border-white shadow-md">
                                 </div>
                                 @else
@@ -31,9 +31,9 @@
                                     </svg>
                                 </a>
                             </div>
-                            <p class="text-gray-600 text-sm mt-1">Senior Full Stack Developer</p>
-                            <p class="text-gray-500 text-sm mt-2">Building scalable web applications with modern technologies</p>
-                            <p class="text-gray-500 text-sm mt-2">{{ $user->Bio}} </p>
+                            <!-- <p class="text-gray-600 text-sm mt-1">Senior Full Stack Developer</p>
+                            <p class="text-gray-500 text-sm mt-2">Building scalable web applications with modern technologies</p> -->
+                            <p class="text-gray-500 text-sm mt-2">{{ $user->Bio }} </p>
 
                                 @if($user->skills)
                                     <div class="mt-4 flex flex-wrap gap-2">
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="flex justify-between text-sm mt-2">
                                     <span class="text-gray-500">Posts</span>
-                                    <span class="text-blue-600 font-medium">52</span>
+                                    <span class="text-blue-600 font-medium">{{ $user->posts->count() }}</span>
                                 </div>
                             </div>
                         </div>
@@ -132,6 +132,7 @@
 
                             <div class="mt-4 mb-2">
                                 <p class="text-gray-700">{{ $post->content }}</p>
+                                <a href="{{$post->link}}" class="text-bleu-500">{{$post->link}}</a>
                                 @if(!empty($post->image))
                                 <div class="flex-shrink-0">
                                     <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">

@@ -44,7 +44,6 @@ class LikeController extends Controller
             $post->likes()->attach($userID);
             return redirect()->back()->with('likeBlue', true);
         }
-
     }
 
     /**

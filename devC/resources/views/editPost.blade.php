@@ -8,8 +8,8 @@
         <div class="mb-4">
             <label for="content" class="block text-gray-700 font-bold mb-2">Content</label>
             <input type="text" name="content" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none" value="{{ $post->content }}">
-            <div class="w-48 h-48 flex-shrink-0">
-                <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">
+            <div class="h-96 flex-shrink-0">
+                <img src="{{Storage::url($post->image)}}" alt="" class="mt-4 w-full h-full object-cover rounded-lg">
             </div>
             <label for="link" class="block text-gray-700 font-bold mb-2 mt-4">link</label>
             <input type="text" name="link" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none" value="{{ $post->link }}">

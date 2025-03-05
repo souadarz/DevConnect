@@ -33,30 +33,32 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-        // dd($user);
+ 
         if ($request->filled('skills')) {
             $skills = explode(',', $request->skills);
             // dd($skills);
             foreach ($skills as $skill) {
                 $skill = trim(strtolower($skill));
                 $skill = Skills::firstOrCreate(['name' => $skill]);
-                $request->user()->skills()->attach($skill->id);
-            }
 
-            // if ($request->hasFile('picture')) {
-                // $picturePath = $request->file('picture')->store('profiles', 'public');
+                if (!$request->user()->skills->contains($skill->id)){
+                    $request->user()->skills()->attach($skill->id);
+                }
+            }
+        }
+            // dd($request->Bio);
+            if ($request->filled('Bio')) {
+                $user->Bio = $request->Bio; 
+            }
             
             $picturePath = $request->file('picture') ? $request->file('picture')->store('images', 'public') : null;
             $user->picture = $picturePath;
 
-            if ($request->filled('Bio')) {
-                $user->Bio = $request->Bio; 
-            }
             $request->user()->save();
             // $user()->save();
 
             return Redirect::route('profile.edit')->with('status', 'profile-updated');
-        }
+
     }
 
     /**
