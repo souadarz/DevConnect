@@ -11,8 +11,15 @@
                     <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                         <div class="relative">
                             <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-400"></div>
-                            <img src="https://avatar.iran.liara.run/public/boy" alt="Profile"
+                                @if(!empty($user->picture))
+                                <div class="w-48 h-48 flex-shrink-0">
+                                    <img src="{{Storage::url($post->image)}}" alt="Profile"
+                                    class="absolute -bottom-6 left-4 w-20 h-20 rounded-full border-4 border-white shadow-md">
+                                </div>
+                                @else
+                                <img src="https://avatar.iran.liara.run/public/boy" alt="Profile"
                                 class="absolute -bottom-6 left-4 w-20 h-20 rounded-full border-4 border-white shadow-md" />
+                                @endif
                         </div>
                         <div class="pt-14 p-4">
                             <div class="flex items-center justify-between">
@@ -25,16 +32,16 @@
                                 </a>
                             </div>
                             <p class="text-gray-600 text-sm mt-1">Senior Full Stack Developer</p>
-                            <p class="text-gray-500 text-sm mt-2">Building scalable web applications with modern
-                                technologies</p>
+                            <p class="text-gray-500 text-sm mt-2">Building scalable web applications with modern technologies</p>
+                            <p class="text-gray-500 text-sm mt-2">{{ $user->Bio}} </p>
 
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">JavaScript</span>
-                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Node.js</span>
-                                <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">React</span>
-                                <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Python</span>
-                                <span class="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Docker</span>
-                            </div>
+                                @if($user->skills)
+                                    <div class="mt-4 flex flex-wrap gap-2">
+                                        @foreach($user->skills as $skill)
+                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $skill->name }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
 
                             <div class="mt-4 pt-4 border-t">
                                 <div class="flex justify-between text-sm">
@@ -126,7 +133,7 @@
                             <div class="mt-4 mb-2">
                                 <p class="text-gray-700">{{ $post->content }}</p>
                                 @if(!empty($post->image))
-                                <div class="w-48 h-48 flex-shrink-0">
+                                <div class="flex-shrink-0">
                                     <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">
                                 </div>
                                 @endif
@@ -143,6 +150,43 @@
                                     </div>
                                 @endif
 
+                            </div>
+                            <div class="mt-4 flex items-center justify-between border-t pt-4">
+                                <div class="flex items-center space-x-4">
+                                    <form action="{{ route('like.store', $post) }}" method="post">
+                                        @csrf
+                                        @if(session('likeBlue') === true)
+                                        <button type="submit" class="flex items-center space-x-2 text-blue-500 hover:text-blue-800">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                                            </svg>
+                                            <span>{{ $post->likes()->count() }}</span>
+                                        </button>
+                                        @else
+                                        <button type="submit" class="flex items-center space-x-2 text-gray-500 hover:text-blue-500">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
+                                            </svg>
+                                            <span>{{ $post->likes()->count() }}</span>
+                                        </button>
+                                        @endif
+                                    </form>
+                                    <button class="flex items-center space-x-2 text-gray-500 hover:text-blue-500">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                                        </svg>
+                                        <span>{{ $post->comments()->count() }}</span>
+                                    </button>
+                                </div>
+                                <button class="text-gray-500 hover:text-blue-500">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                    </svg>
+                                </button>
                             </div>
 
                             <!-- Comments Section -->

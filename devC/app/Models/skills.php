@@ -9,6 +9,6 @@ class Skills extends Model
     protected $fillable = ['name'];
 
     public function user(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'user_skills');
     }
 }

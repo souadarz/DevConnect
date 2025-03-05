@@ -20,7 +20,7 @@
             <p class="text-gray-700">{{ $post->content }}</p>
             <a href="{{$post->link}}" class="text-bleu-500">{{$post->link}}</a>
             @if(!empty($post->image))
-            <div class="w-48 h-48 flex-shrink-0">
+            <div class=" h-96 flex-shrink-0">
                 <img src="{{Storage::url($post->image)}}" alt="" class="w-full h-full object-cover rounded-lg">
             </div>
             @endif

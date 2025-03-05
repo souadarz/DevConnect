@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,6 @@ Route::delete('/deletePost{post}', [PostController::class, 'destroy'])->name('po
 
 // comment route
 Route::post('/storeComment/{post}', [CommentController::class, 'store'])->name('comment.store');
+Route::post('/like/{post}', [LikeController::class, 'store'])->name('like.store');
 
 require __DIR__.'/auth.php';

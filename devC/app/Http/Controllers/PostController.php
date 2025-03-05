@@ -51,7 +51,7 @@ class PostController extends Controller
             'user_id' => Auth::id() ]);
 
             if ($request->filled('tags')) {
-                $tags = explode(' ', $request->tags);
+                $tags = explode(',', $request->tags);
                 foreach ($tags as $tagg) {
                     $tag = trim(strtolower($tagg));
                     if (!empty($tag)) {
