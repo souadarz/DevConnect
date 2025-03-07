@@ -53,8 +53,25 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function connexions(){
-        return $this->hasMany(Connexion::class);
+    // public function connexions(){
+    //     return $this->hasMany(Connexion::class );
+    // }
+
+    public function sentConnections()
+    {
+        return $this->hasMany(Connexion::class, 'sender_id');
+    }
+
+    // Connexions reçues (l'utilisateur est le receiver)
+    public function receivedConnections()
+    {
+        return $this->hasMany(Connexion::class, 'receiver_id');
+    }
+
+    // Obtenir les utilisateurs connectés (connexions acceptées)
+    public function connections()
+    {
+        return $this->belongsToMany(User::class, 'connexions', 'sender_id', 'receiver_id');
     }
 
     public function Comments(){

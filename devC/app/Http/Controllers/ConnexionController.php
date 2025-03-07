@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\connexion;
+use App\Events\TestNotification;
+use App\Models\Connexion;
 use App\Http\Requests\StoreconnexionRequest;
 use App\Http\Requests\UpdateconnexionRequest;
+use App\Models\Notification;
+use App\Models\User;
+use App\Notifications\ConnexionNotification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ConnexionController extends Controller
 {
@@ -19,9 +25,34 @@ class ConnexionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function sendConnection(Request $request,$receiver_id)
     {
-        //
+        $connection = new Connexion();
+        $connection->sender_id = Auth::id();
+        $connection->receiver_id = $receiver_id;
+        $connection->status = 'pending';
+        $connection->save();
+        $user_name = Auth::user()->name;
+        
+        $user = User::find(Auth::id());
+        $user->notify(new ConnexionNotification($user_name));
+        
+        $notifCount = Notification::count();
+        event(new TestNotification([
+            'user_name' => $user_name,
+            'message' => 'You Have An Invitation From',
+            'count_notifications' => $notifCount
+        ]));
+        // dd($test);
+    
+        // Redirect with success message
+        return redirect()->back()->with('success', 'connection created successfully!');
+        
+    }
+
+    public function acceptConnection($connexion_id) {
+        $connection = Connexion::where('receiver_id', Auth::id())->findOrFail($connexion_id);
+        $connection->update(['status' => 'accepted']);
     }
 
     /**

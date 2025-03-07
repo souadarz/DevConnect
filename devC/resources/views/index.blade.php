@@ -3,6 +3,8 @@
     <body class="bg-gray-50">
         <!-- Navigation -->
         <x-navBar />
+      
+        
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto pt-20 px-4">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -11,15 +13,15 @@
                     <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                         <div class="relative">
                             <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-400"></div>
-                                @if(!empty($user->picture))
-                                <div class="flex-shrink-0">
-                                    <img src="{{Storage::url($user->picture)}}" alt="Profile"
+                            @if(!empty($user->picture))
+                            <div class="flex-shrink-0">
+                                <img src="{{Storage::url($user->picture)}}" alt="Profile picture"
                                     class="absolute -bottom-6 left-4 w-20 h-20 rounded-full border-4 border-white shadow-md">
-                                </div>
-                                @else
-                                <img src="https://avatar.iran.liara.run/public/boy" alt="Profile"
+                            </div>
+                            @else
+                            <img src="https://avatar.iran.liara.run/public/boy" alt="Profile"
                                 class="absolute -bottom-6 left-4 w-20 h-20 rounded-full border-4 border-white shadow-md" />
-                                @endif
+                            @endif
                         </div>
                         <div class="pt-14 p-4">
                             <div class="flex items-center justify-between">
@@ -35,13 +37,13 @@
                             <p class="text-gray-500 text-sm mt-2">Building scalable web applications with modern technologies</p> -->
                             <p class="text-gray-500 text-sm mt-2">{{ $user->Bio }} </p>
 
-                                @if($user->skills)
-                                    <div class="mt-4 flex flex-wrap gap-2">
-                                        @foreach($user->skills as $skill)
-                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $skill->name }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
+                            @if($user->skills)
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                @foreach($user->skills as $skill)
+                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $skill->name }}</span>
+                                @endforeach
+                            </div>
+                            @endif
 
                             <div class="mt-4 pt-4 border-t">
                                 <div class="flex justify-between text-sm">
@@ -60,18 +62,19 @@
                     <div class="bg-white rounded-xl shadow-sm p-4">
                         <h3 class="font-semibold mb-4">Trending Tags</h3>
                         <div class="space-y-2">
-                            <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
+                            <!-- <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
                                 <span class="text-gray-600">#javascript</span>
                                 <span class="text-gray-400 text-sm">2.4k</span>
                             </a>
                             <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
                                 <span class="text-gray-600">#react</span>
                                 <span class="text-gray-400 text-sm">1.8k</span>
-                            </a>
+                            </a> -->
                             <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
-                                <span class="text-gray-600">#webdev</span>
+                                <span class="text-gray-600"></span>
                                 <span class="text-gray-400 text-sm">1.2k</span>
                             </a>
+
                         </div>
                     </div>
                 </div>
@@ -120,8 +123,10 @@
                         <div class="p-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center space-x-3">
-                                    <img src="https://avatar.iran.liara.run/public/boy" alt="User"
-                                        class="w-12 h-12 rounded-full" />
+                                    <a href="/userProfile/{{ $post->user->id }}">
+                                        <img src="{{Storage::url($post->user->picture) }}" alt="User"
+                                            class="w-12 h-12 rounded-full" />
+                                    </a>
                                     <div>
                                         <h3 class="font-semibold">{{ $post->user->name }}</h3>
                                         <p class="text-gray-500 text-sm">Senior Backend Developer at Tech Corp</p>
@@ -144,11 +149,11 @@
                                 </div>
                                 @endif
                                 @if($post->tags)
-                                    <div class="mt-4 flex flex-wrap gap-2">
-                                        @foreach($post->tags as $tag)
-                                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $tag->name }}</span>
-                                        @endforeach
-                                    </div>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    @foreach($post->tags as $tag)
+                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $tag->name }}</span>
+                                    @endforeach
+                                </div>
                                 @endif
 
                             </div>
@@ -299,4 +304,6 @@
                             </div>
                         </div>
                     </div>
+
+                    <x-pusher1/>
 </x-app-layout>
