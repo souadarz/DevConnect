@@ -7,6 +7,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TweetController;
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Laravel\Reverb\Protocols\Pusher\Http\Controllers\ConnectionsController;
 
@@ -48,4 +49,5 @@ Route::view('tweet', 'tweet');
 Route::post('/sendConnection/{receiver_id}', [ConnexionController::class, 'sendConnection'])->name('connection.send');
 // Route::view('index', 'index');
 
+  
 require __DIR__.'/auth.php';

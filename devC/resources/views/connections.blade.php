@@ -19,8 +19,6 @@
             </div>
             @endif
 
-        </div>
-
     <!-- Send Connection Button -->
     <div class="w-full md:w-1/3 flex justify-center items-center mt-10 md:mt-0">
         <form action="{{route('connection.send', $user->id) }}" method="POST">
@@ -29,6 +27,7 @@
                 Send Connection
             </button>
         </form>
+    </div>
     </div>
 </div>
 <x-pusher1></x-pusher1>

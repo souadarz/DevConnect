@@ -1,6 +1,7 @@
 <?php
 namespace App\Notifications;
 
+use App\Models\Connexion;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -14,10 +15,12 @@ class ConnexionNotification extends Notification
     use Queueable;
 
     public $user_name;
+    public $connection;
 
     public function __construct($user_name)
     {
         $this->user_name = $user_name;
+        // $this->connection = $connection;
     }
 
     // Store the notification in the database
@@ -34,6 +37,7 @@ class ConnexionNotification extends Notification
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
+            // 'receiver' => $this->connection->receiver_id,
             'user_name' => $this->user_name,
             'message' => 'You Have An Invitation From' . $this->user_name,
         ]);
