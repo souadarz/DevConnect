@@ -6,9 +6,10 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 Route::get('/', function () {
-    return view('welcome');
+    return View('welcome');
 });
 
 // Route::get('/dashboard', function () {
