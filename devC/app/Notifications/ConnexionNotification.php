@@ -15,12 +15,12 @@ class ConnexionNotification extends Notification
     use Queueable;
 
     public $user_name;
-    public $connection;
+    public $receiver_id;
 
-    public function __construct($user_name)
+    public function __construct($user_name,$receiver_id)
     {
         $this->user_name = $user_name;
-        // $this->connection = $connection;
+        $this->receiver_id = $receiver_id;
     }
 
     // Store the notification in the database
@@ -28,6 +28,7 @@ class ConnexionNotification extends Notification
     {
         // $user_name = Auth::user()->name;
         return [
+            'receiver_id' => $this->receiver_id,
             'user_name' => $this->user_name,
             'message' => 'You Have An Invitation From' . $this->user_name,
         ];
@@ -37,7 +38,7 @@ class ConnexionNotification extends Notification
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            // 'receiver' => $this->connection->receiver_id,
+            'receiver_id' => $this->receiver_id,
             'user_name' => $this->user_name,
             'message' => 'You Have An Invitation From' . $this->user_name,
         ]);

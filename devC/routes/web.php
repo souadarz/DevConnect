@@ -47,6 +47,8 @@ Route::view('tweet', 'tweet');
 
 // connection route 
 Route::post('/sendConnection/{receiver_id}', [ConnexionController::class, 'sendConnection'])->name('connection.send');
+Route::get('/connections', [ConnexionController::class, 'index'])->name('connections.page');
+
 // Route::view('index', 'index');
 
   

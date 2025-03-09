@@ -19,7 +19,7 @@ class ConnexionController extends Controller
      */
     public function index()
     {
-        //
+        return view('/connections',);
     }
 
     /**
@@ -29,31 +29,25 @@ class ConnexionController extends Controller
     {
         $connection = new Connexion();
         $connection->sender_id = Auth::id();
-        $connection->receiver_id = (int) $receiver_id;
+        $connection->receiver_id = $receiver_id;
         $connection->status = 'pending';
         $connection->save();
         $user_name = Auth::user()->name;
         
-        // dd($connection);
-        // dump($connection->receiver_id);
-        // dump(Auth::id());
-        // dump(Auth::id() === $connection->receiver_id);
-        if (Auth::id() === $connection->sender_id) {
+        // if (Auth::id() === $connection->sender_id) {
             // $user = $connection->sender_id;
             $user = User::find(Auth::id());
-            $user->notify(new ConnexionNotification($user_name));
+            $user->notify(new ConnexionNotification($user_name,$receiver_id));
             
             $notifCount = Notification::count();
-            // event(new TestNotification([
-            //     'receiver' => $connection->receiver_id,
-            //     'user_name' => $user_name,
-            //     'message' => 'You Have An Invitation From',
-            //     'count_notifications' => $notifCount
-            // ]));
-        }
+            event(new TestNotification([
+                'receiver_id' => $receiver_id,
+                'user_name' => $user_name,
+                'message' => 'You Have An Invitation From',
+                'count_notifications' => $notifCount
+            ]));
         // dd($test);
     
-        // Redirect with success message
         return redirect()->back()->with('success', 'connection created successfully!');
         
     }

@@ -88,7 +88,7 @@
             <div class="mt-4 flex flex-wrap gap-2">
                 <span  class="text-gray-600" >Skills :</span>
                 @foreach($user->skills as $skill)
-                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $skill->name }}</span>
+                <span class="px-2 py-1 bg-purple-100 text-purple-900 rounded-full text-xs">{{ $skill->name }}</span>
                 @endforeach
             </div>
             @endif

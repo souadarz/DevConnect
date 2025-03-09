@@ -26,6 +26,9 @@
     }
 </style>
 <script>
+        @php
+        $userId = auth() -> check()? auth() -> user() -> id : 0;
+        @endphp
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
@@ -35,23 +38,25 @@
 
         var channel = pusher.subscribe('notification');
         channel.bind('test.notification', function(data) {
-            if (data.user_name) {
-                count_notif.textContent = data.count_notifications;
-                toastr.info(
-                    `<div class="notification-content">
-                        <span>${data.user_name}</span>
-                    </div>`,
-                    {
-                        closeButton: true,
-                        progressBar: true,
-                        timeOut: 0,
-                        extendedTimeOut: 0,
-                        positionClass: 'toast-top-right',
-                        enableHtml: true
-                    }
-                );
-            } else {
-                console.error('Invalid data received:', data);
+            if (parseInt(data.receiver_id) == parseInt({{ $userId }}) ){
+                if (data.user_name) {
+                    count_notif.textContent = data.count_notifications;
+                    toastr.info(
+                        `<div class="notification-content">
+                            <span>${data.user_name}</span>
+                        </div>`,
+                        {
+                            closeButton: true,
+                            progressBar: true,
+                            timeOut: 0,
+                            extendedTimeOut: 0,
+                            positionClass: 'toast-top-right',
+                            enableHtml: true
+                        }
+                    );
+                } else {
+                    console.error('Invalid data received:', data);
+                }
             }
         });
 

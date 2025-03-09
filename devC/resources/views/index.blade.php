@@ -6,13 +6,13 @@
       
         
         <!-- Main Content -->
-        <div class="max-w-7xl mx-auto pt-20 px-4">
+        <div class="max-w-7xl mx-auto pt-32 px-4">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 <!-- Profile Card -->
                 <div class="space-y-6">
                     <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                         <div class="relative">
-                            <div class="h-24 bg-gradient-to-r from-blue-600 to-blue-400"></div>
+                            <div class="h-24 bg-gradient-to-tr from-blue-800 to-purple-700"></div>
                             @if(!empty($user->picture))
                             <div class="flex-shrink-0">
                                 <img src="{{Storage::url($user->picture)}}" alt="Profile picture"
@@ -40,7 +40,7 @@
                             @if($user->skills)
                             <div class="mt-4 flex flex-wrap gap-2">
                                 @foreach($user->skills as $skill)
-                                <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $skill->name }}</span>
+                                <span class="px-2 py-1 bg-purple-100 text-purple-900 rounded-full text-xs">{{ $skill->name }}</span>
                                 @endforeach
                             </div>
                             @endif
@@ -111,7 +111,7 @@
 
                                 <div class="flex justify-end mt-3">
                                     <button type="submit"
-                                        class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-700">Post</button>
+                                        class="bg-gradient-to-tr from-blue-800 to-purple-700 text-white px-4 py-2 rounded-lg hover:bg-gray-700">Post</button>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                                     </a>
                                     <div>
                                         <h3 class="font-semibold">{{ $post->user->name }}</h3>
-                                        <p class="text-gray-500 text-sm">Senior Backend Developer at Tech Corp</p>
+                                        <p class="text-gray-500 text-sm"> {{ $post->user->Bio }} </p>
                                         <p class="text-gray-400 text-xs">{{$post->created_at->diffForHumans()}}</p>
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@
                                 @if($post->tags)
                                 <div class="mt-4 flex flex-wrap gap-2">
                                     @foreach($post->tags as $tag)
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ $tag->name }}</span>
+                                    <span class="px-2 py-1 bg-blue-200 text-blue-800 rounded-full text-xs">{{ $tag->name }}</span>
                                     @endforeach
                                 </div>
                                 @endif
@@ -209,7 +209,7 @@
                                                 <textarea name="content" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                     placeholder="Add to the discussion..."></textarea>
                                                 <div class="flex justify-end">
-                                                    <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Comment</button>
+                                                    <button type="submit" class="mt-2 bg-gradient-to-tr from-blue-800 to-purple-700 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Comment</button>
                                                 </div>
                                             </div>
                                         </div>
