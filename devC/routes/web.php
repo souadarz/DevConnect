@@ -48,6 +48,8 @@ Route::view('tweet', 'tweet');
 // connection route 
 Route::post('/sendConnection/{receiver_id}', [ConnexionController::class, 'sendConnection'])->name('connection.send');
 Route::get('/connections', [ConnexionController::class, 'index'])->name('connections.page');
+Route::post('/acceptConnection/{connexion_id}', [ConnexionController::class, 'acceptConnection'])->name('connection.accept');
+Route::post('/rejectConnection/{connexion_id}', [ConnexionController::class, 'rejectConnection'])->name('connection.reject');
 
 // Route::view('index', 'index');
 

@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <body class="bg-gray-50">
+    <div class="bg-gray-50">
         <!-- Navigation -->
         <x-navBar />
       
@@ -47,8 +47,12 @@
 
                             <div class="mt-4 pt-4 border-t">
                                 <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500">Connections</span>
+                                    <!-- <form action=""> -->
+                                    <a href="/connections">
+                                        <span class="text-gray-500">Connections</span>
+                                    </a>
                                     <span class="text-blue-600 font-medium">487</span>
+                                    <!-- </form> -->
                                 </div>
                                 <div class="flex justify-between text-sm mt-2">
                                     <span class="text-gray-500">Posts</span>

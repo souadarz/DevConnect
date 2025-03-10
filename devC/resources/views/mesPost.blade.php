@@ -1,7 +1,8 @@
 <x-app-layout>
+ <div class="bg-gray-100">
     <x-navBar />
 
-    <h1 class="text-2xl font-bold ml-8 mt-8">My Posts</h1>
+    <h1 class="text-2xl font-bold ml-8 mt-32">My Posts</h1>
 
     <div class="flex flex-col space-y-4">
         @foreach ($posts->sortByDesc('created_at') as $post)
@@ -40,4 +41,5 @@
         </div>
         @endforeach
     </div>
+</div>
 </x-app-layout>

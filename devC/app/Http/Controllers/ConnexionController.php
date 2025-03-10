@@ -19,7 +19,9 @@ class ConnexionController extends Controller
      */
     public function index()
     {
-        return view('/connections',);
+        // $user = User::where('id',$user_id)->first();
+        $connections = Connexion::all();
+        return view('/connections',compact('connections'));
     }
 
     /**
@@ -27,6 +29,18 @@ class ConnexionController extends Controller
      */
     public function sendConnection(Request $request,$receiver_id)
     {
+        $sender_id = Auth::id();
+
+        // Vérifier si la connexion existe déjà (peu importe le statut)
+        $existingConnection = Connexion::where(function ($query) use ($sender_id, $receiver_id) {
+            $query->where('sender_id', $sender_id)
+                  ->where('receiver_id', $receiver_id);
+                })->exists();
+        if ($existingConnection) {
+            return redirect()->back()->with('You already have a existing connection with this user.');
+        }
+
+
         $connection = new Connexion();
         $connection->sender_id = Auth::id();
         $connection->receiver_id = $receiver_id;
@@ -53,8 +67,21 @@ class ConnexionController extends Controller
     }
 
     public function acceptConnection($connexion_id) {
-        $connection = Connexion::where('receiver_id', Auth::id())->findOrFail($connexion_id);
-        $connection->update(['status' => 'accepted']);
+    
+        $connection = Connexion::where('receiver_id', Auth::id())->where('id', $connexion_id)->first();
+        // dd($connection);
+        // $connection->update(['status' => 'accepted']);
+        $connection->status = 'accepted';
+        $connection->save();
+
+        return redirect()->back();
+    }
+
+    public function rejectConnection($connexion_id) {
+
+        $connection = Connexion::where('receiver_id', Auth::id())->where('id', $connexion_id)->first();
+        $connection->delete(); 
+        return redirect()->back()->with('message', 'Connection request rejected');
     }
 
     /**

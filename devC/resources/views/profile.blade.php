@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-navBar />
-<div class="max-w-5xl w-full flex justify-center mx-auto mt-10  bg-white dark:bg-gray-800 rounded-xl shadow-xl">
+<div class="max-w-5xl w-full flex justify-center mx-auto mt-32  bg-white dark:bg-gray-800 rounded-xl shadow-xl">
     <!-- Profile Section -->
     
-    <div class="w-full md:w-1/3 items-center text-center flex flex-col p-4 border rounded-lg">
+    <div class="w-full md:w-1/3 items-center text-center flex flex-col p-4 rounded-lg">
             <img src="{{Storage::url($user->picture)}}" alt="Profile Picture" class="w-32 h-32 rounded-full object-cover border-2 border-gray-300 dark:border-gray-700">
             <h2 class="mt-4 text-xl font-semibold text-gray-900">{{ $user->name }}</h2>
             <p class="text-gray-600 ">{{ $user->email }}</p>
