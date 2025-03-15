@@ -80,7 +80,7 @@ class ConnexionController extends Controller
     public function rejectConnection($connexion_id) {
 
         $connection = Connexion::where('receiver_id', Auth::id())->where('id', $connexion_id)->first();
-        $connection->delete(); 
+        $connection->delete();
         return redirect()->back()->with('message', 'Connection request rejected');
     }
 

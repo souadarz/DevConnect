@@ -52,6 +52,5 @@ Route::post('/acceptConnection/{connexion_id}', [ConnexionController::class, 'ac
 Route::post('/rejectConnection/{connexion_id}', [ConnexionController::class, 'rejectConnection'])->name('connection.reject');
 
 // Route::view('index', 'index');
-
   
 require __DIR__.'/auth.php';
