@@ -43,7 +43,7 @@
                     count_notif.textContent = data.count_notifications;
                     toastr.info(
                         `<div class="notification-content">
-                            <span>${data.user_name}</span>
+                            <span>${data.message} ${data.user_name}</span>
                         </div>`,
                         {
                             closeButton: true,

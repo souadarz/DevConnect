@@ -44,6 +44,11 @@
                             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ $connection->sender->email }}</p>
                         </div>
                     </div>
+                    <form action="{{ route('connection.delete',$connection->id ) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette connection ?');">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="Delete" class="cursor-pointer text-red-500">
+                    </form>
                     <span class="text-green-600 font-semibold">Connecté</span>
                 </li>
                 @endforeach

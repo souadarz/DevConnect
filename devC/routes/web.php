@@ -51,6 +51,7 @@ Route::post('/sendConnection/{receiver_id}', [ConnexionController::class, 'sendC
 Route::get('/connections', [ConnexionController::class, 'index'])->name('connections.page');
 Route::post('/acceptConnection/{connexion_id}', [ConnexionController::class, 'acceptConnection'])->name('connection.accept');
 Route::post('/rejectConnection/{connexion_id}', [ConnexionController::class, 'rejectConnection'])->name('connection.reject');
+Route::delete('/connection/destroy/{connexion}',[ConnexionController::class, 'destroy'])->name('connection.delete');
 
 // Route::view('index', 'index');
   

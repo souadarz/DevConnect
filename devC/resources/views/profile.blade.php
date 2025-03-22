@@ -28,6 +28,11 @@
             <button type="submit" class="px-6 py-3 bg-blue-500 text-white text-lg rounded-full hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300 ease-in-out">
                 Send Connection
             </button>
+            @if (session('error'))
+            <div class="alert text-red-500">
+                {{ session('error') }}
+            </div>
+            @endif
         </form>
     </div>
 </div>

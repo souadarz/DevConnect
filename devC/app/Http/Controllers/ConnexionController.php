@@ -37,7 +37,7 @@ class ConnexionController extends Controller
                   ->where('receiver_id', $receiver_id);
                 })->exists();
         if ($existingConnection) {
-            return redirect()->back()->with('You already have a existing connection with this user.');
+            return redirect()->back()->with('error', 'You already have a existing connection with this user.');
         }
 
 
@@ -121,6 +121,7 @@ class ConnexionController extends Controller
      */
     public function destroy(connexion $connexion)
     {
-        //
+        $connexion->delete();
+        return redirect()->back();
     }
 }
