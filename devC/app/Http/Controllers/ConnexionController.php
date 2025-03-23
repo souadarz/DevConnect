@@ -21,53 +21,59 @@ class ConnexionController extends Controller
     {
         // $user = User::where('id',$user_id)->first();
         $connections = Connexion::all();
-        return view('/connections',compact('connections'));
+        return view('/connections', compact('connections'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function sendConnection(Request $request,$receiver_id)
+    public function sendConnection(Request $request, $receiver_id)
     {
         $sender_id = Auth::id();
 
-        // Vérifier si la connexion existe déjà (peu importe le statut)
+        // Vérifier si la connexion existe déjà
         $existingConnection = Connexion::where(function ($query) use ($sender_id, $receiver_id) {
             $query->where('sender_id', $sender_id)
-                  ->where('receiver_id', $receiver_id);
-                })->exists();
+                ->where('receiver_id', $receiver_id);
+        })->exists();
         if ($existingConnection) {
             return redirect()->back()->with('error', 'You already have a existing connection with this user.');
         }
-
 
         $connection = new Connexion();
         $connection->sender_id = Auth::id();
         $connection->receiver_id = $receiver_id;
         $connection->status = 'pending';
         $connection->save();
+
         $user_name = Auth::user()->name;
-        
-        // if (Auth::id() === $connection->sender_id) {
-            // $user = $connection->sender_id;
-            $user = User::find(Auth::id());
-            $user->notify(new ConnexionNotification($user_name,$receiver_id));
-            
-            $notifCount = Notification::count();
+        // $user = User::find(Auth::id());
+        // $user->notify(new ConnexionNotification($user_name, $receiver_id));
+
+        $receiver = User::find($receiver_id);
+
+        if ($receiver) {
+            $receiver->notify(new ConnexionNotification($user_name, $receiver_id));
+
+            $notifCount = $receiver->unreadNotifications()->count();
+
+            // $notifCount = Notification::count();
             event(new TestNotification([
                 'receiver_id' => $receiver_id,
                 'user_name' => $user_name,
                 'message' => 'You Have An Invitation From',
                 'count_notifications' => $notifCount
             ]));
-        // dd($test);
-    
-        return redirect()->back()->with('success', 'connection created successfully!');
-        
+            // dd($test);
+
+            return redirect()->back()->with('success', 'connection created successfully!');
+        }
+        return redirect()->back()->with('error', 'User not found.');
     }
 
-    public function acceptConnection($connexion_id) {
-    
+    public function acceptConnection($connexion_id)
+    {
+
         $connection = Connexion::where('receiver_id', Auth::id())->where('id', $connexion_id)->first();
         // dd($connection);
         // $connection->update(['status' => 'accepted']);
@@ -77,7 +83,8 @@ class ConnexionController extends Controller
         return redirect()->back();
     }
 
-    public function rejectConnection($connexion_id) {
+    public function rejectConnection($connexion_id)
+    {
 
         $connection = Connexion::where('receiver_id', Auth::id())->where('id', $connexion_id)->first();
         $connection->delete();

@@ -49,13 +49,13 @@
                                 <div class="flex justify-between text-sm">
                                     <!-- <form action=""> -->
                                     <a href="/connections">
-                                        <span class="text-gray-500">Connections</span>
+                                        <span class="font-bold text-purple-500">Connections</span>
                                     </a>
-                                    <span class="text-blue-600 font-medium">487</span>
+                                    <span class="text-blue-600 font-medium">{{ $user->sentConnections->count() }}</span>
                                     <!-- </form> -->
                                 </div>
                                 <div class="flex justify-between text-sm mt-2">
-                                    <span class="text-gray-500">Posts</span>
+                                    <span class="font-bold text-purple-500">Posts</span>
                                     <span class="text-blue-600 font-medium">{{ $user->posts->count() }}</span>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                     <form action="{{route('post.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="bg-white rounded-xl shadow-sm p-4">
-                            <div class="flex-col items-center space-x-4">
+                            <div class="flex-col items-center">
 
                                 <!-- <button
                                  class="bg-gray-100 hover:bg-gray-200 text-gray-500 text-left rounded-lg px-4 py-3 flex-grow transition-colors duration-200">
