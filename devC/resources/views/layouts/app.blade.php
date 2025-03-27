@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="user-id" content="{{ auth()->user()->id ?? '' }}">
-
+        <meta name="user-id" content="{{ Auth::id() }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
@@ -22,6 +22,9 @@
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <style>
@@ -55,6 +58,7 @@
             <!-- Page Content -->
             <main>
                 {{ $slot }}
+                @stack('scripts')
             </main>
         </div>
     </body>

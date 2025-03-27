@@ -9,14 +9,15 @@
                     <span class="text-lg font-medium text-gray-900 ml-3">{{ $notification->data['message'] }}</span>
                     <span class="text-gray-500 text-sm">{{ $notification->created_at->diffForHumans() }}</span>
                 </div>
-                
-                <!-- Bouton pour marquer comme lu -->
+
                 @if (!$notification->read_at)
-                    <form action="{{ route('notifications.read', $notification->id) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="text-s text-purple-500 hover:text-purple-700 focus:outline-none mr-2">Mark As Read</button>
-                    </form>
+                <button
+                    type="button"
+                    data-notification-id="{{ $notification->id }}"
+                    onclick="markNotificationAsRead('{{ $notification->id }}')"
+                    class="text-s text-purple-500 hover:text-purple-700 focus:outline-none mr-2">
+                    Mark As Read
+                </button>
                 @endif
             </li>
             @empty
@@ -24,5 +25,56 @@
             @endforelse
         </ul>
     </div>
-    <x-pusher1 />
+
+    @push('scripts')
+    <script>
+        // function markNotificationAsRead(notificationId) {
+        //     fetch(`/notifications/${notificationId}/read`, {
+        //         method: 'PATCH',
+        //         headers: {
+        //             'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        //             'Accept': 'application/json'
+        //         }
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // Mettre à jour le compteur de notifications
+        //         const notificationCount = document.getElementById('count_notif');
+        //         if (notificationCount) {
+        //             notificationCount.textContent = data.count;
+        //             notificationCount.style.display = data.count > 0 ? 'block' : 'none';
+        //         }
+
+        //         // Recharger la page ou mettre à jour dynamiquement
+        //         location.reload();
+        //     })
+        //     .catch(error => console.error('Error:', error));
+        // }
+
+        function markNotificationAsRead(notificationId) {
+            fetch(`/notifications/${notificationId}/read`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Vérifier si la requête a réussi
+                    if (data.success) {
+                        document.querySelector(`[data-notification-id="${notificationId}"]`).remove();
+
+                        // Mettre à jour le compteur de notifications
+                        const notificationCount = document.getElementById('count_notif');
+                        if (notificationCount) {
+                            notificationCount.textContent = data.count;
+                            notificationCount.style.display = data.count > 0 ? 'block' : 'none';
+                        }
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+    @endpush
 </x-app-layout>

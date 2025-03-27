@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     // Route::post('/notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
     Route::get('/notifications/count', [NotificationController::class, 'getUnreadNotificationsCount'])->name('notifications.count');
     Route::patch('notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
 });
 
 // post route

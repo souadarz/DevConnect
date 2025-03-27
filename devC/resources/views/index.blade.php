@@ -4,7 +4,6 @@
         <!-- Navigation -->
         <x-navBar />
       
-        
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto pt-32 px-4">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
