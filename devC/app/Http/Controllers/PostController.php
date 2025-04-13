@@ -49,6 +49,7 @@ class PostController extends Controller
             'image' => $imagepath,
             'link' => $request->link,
             'user_id' => Auth::id() ]);
+            // dd($imagepath);
 
             if ($request->filled('tags')) {
                 $tags = explode(',', $request->tags);

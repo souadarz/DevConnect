@@ -4,7 +4,6 @@
         <!-- Navigation -->
         <x-navBar />
       
-        
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto pt-32 px-4">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -49,13 +48,13 @@
                                 <div class="flex justify-between text-sm">
                                     <!-- <form action=""> -->
                                     <a href="/connections">
-                                        <span class="text-gray-500">Connections</span>
+                                        <span class="font-bold text-purple-500">Connections</span>
                                     </a>
-                                    <span class="text-blue-600 font-medium">487</span>
+                                    <span class="text-blue-600 font-medium">{{ $user->receivedConnections->count() }}</span>
                                     <!-- </form> -->
                                 </div>
                                 <div class="flex justify-between text-sm mt-2">
-                                    <span class="text-gray-500">Posts</span>
+                                    <span class="font-bold text-purple-500">Posts</span>
                                     <span class="text-blue-600 font-medium">{{ $user->posts->count() }}</span>
                                 </div>
                             </div>
@@ -66,16 +65,8 @@
                     <div class="bg-white rounded-xl shadow-sm p-4">
                         <h3 class="font-semibold mb-4">Trending Tags</h3>
                         <div class="space-y-2">
-                            <!-- <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
-                                <span class="text-gray-600">#javascript</span>
-                                <span class="text-gray-400 text-sm">2.4k</span>
-                            </a>
                             <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
                                 <span class="text-gray-600">#react</span>
-                                <span class="text-gray-400 text-sm">1.8k</span>
-                            </a> -->
-                            <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
-                                <span class="text-gray-600"></span>
                                 <span class="text-gray-400 text-sm">1.2k</span>
                             </a>
 
@@ -89,7 +80,7 @@
                     <form action="{{route('post.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="bg-white rounded-xl shadow-sm p-4">
-                            <div class="flex-col items-center space-x-4">
+                            <div class="flex-col items-center">
 
                                 <!-- <button
                                  class="bg-gray-100 hover:bg-gray-200 text-gray-500 text-left rounded-lg px-4 py-3 flex-grow transition-colors duration-200">
@@ -309,5 +300,5 @@
                         </div>
                     </div>
 
-                    <x-pusher1/>
+            <x-pusher1/>
 </x-app-layout>

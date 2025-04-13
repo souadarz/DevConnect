@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Notifications;
 
 use App\Models\Connexion;
@@ -17,7 +18,7 @@ class ConnexionNotification extends Notification
     public $user_name;
     public $receiver_id;
 
-    public function __construct($user_name,$receiver_id)
+    public function __construct($user_name, $receiver_id)
     {
         $this->user_name = $user_name;
         $this->receiver_id = $receiver_id;
@@ -47,5 +48,14 @@ class ConnexionNotification extends Notification
     public function via($notifiable)
     {
         return ['database', 'broadcast']; // Save to database and broadcast in real-time
+    }
+
+    public function toArray($notifiable)
+    {
+        return [
+            'receiver_id' => $this->receiver_id,
+            'user_name' => $this->user_name,
+            'message' => 'You Have An Invitation From ' . $this->user_name,
+        ];
     }
 }
