@@ -28,29 +28,6 @@
 
     @push('scripts')
     <script>
-        // function markNotificationAsRead(notificationId) {
-        //     fetch(`/notifications/${notificationId}/read`, {
-        //         method: 'PATCH',
-        //         headers: {
-        //             'X-CSRF-TOKEN': '{{ csrf_token() }}',
-        //             'Accept': 'application/json'
-        //         }
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Mettre à jour le compteur de notifications
-        //         const notificationCount = document.getElementById('count_notif');
-        //         if (notificationCount) {
-        //             notificationCount.textContent = data.count;
-        //             notificationCount.style.display = data.count > 0 ? 'block' : 'none';
-        //         }
-
-        //         // Recharger la page ou mettre à jour dynamiquement
-        //         location.reload();
-        //     })
-        //     .catch(error => console.error('Error:', error));
-        // }
-
         function markNotificationAsRead(notificationId) {
             fetch(`/notifications/${notificationId}/read`, {
                     method: 'PATCH',

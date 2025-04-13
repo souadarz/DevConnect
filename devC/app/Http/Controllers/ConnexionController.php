@@ -61,7 +61,7 @@ class ConnexionController extends Controller
             event(new TestNotification([
                 'receiver_id' => $receiver_id,
                 'user_name' => $user_name,
-                'message' => 'You Have An Invitation From',
+                'message' => 'You Have An Invitation From ',
                 'count_notifications' => $notifCount
             ]));
             // dd($test);

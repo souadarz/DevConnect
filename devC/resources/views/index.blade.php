@@ -50,7 +50,7 @@
                                     <a href="/connections">
                                         <span class="font-bold text-purple-500">Connections</span>
                                     </a>
-                                    <span class="text-blue-600 font-medium">{{ $user->sentConnections->count() }}</span>
+                                    <span class="text-blue-600 font-medium">{{ $user->receivedConnections->count() }}</span>
                                     <!-- </form> -->
                                 </div>
                                 <div class="flex justify-between text-sm mt-2">
@@ -65,16 +65,8 @@
                     <div class="bg-white rounded-xl shadow-sm p-4">
                         <h3 class="font-semibold mb-4">Trending Tags</h3>
                         <div class="space-y-2">
-                            <!-- <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
-                                <span class="text-gray-600">#javascript</span>
-                                <span class="text-gray-400 text-sm">2.4k</span>
-                            </a>
                             <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
                                 <span class="text-gray-600">#react</span>
-                                <span class="text-gray-400 text-sm">1.8k</span>
-                            </a> -->
-                            <a href="#" class="flex items-center justify-between hover:bg-gray-50 p-2 rounded">
-                                <span class="text-gray-600"></span>
                                 <span class="text-gray-400 text-sm">1.2k</span>
                             </a>
 
@@ -308,5 +300,5 @@
                         </div>
                     </div>
 
-                    <x-pusher1/>
+            <x-pusher1/>
 </x-app-layout>
